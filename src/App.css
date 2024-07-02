@@ -1,0 +1,237 @@
+
+/*  Importa a fonte do Google */
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Swash:wght@400;700&family=Henny+Penny&display=swap'); 
+
+body {
+  font-family: 'Cherry Swash', sans-serif;   /*  Fonte para os textos */
+  font-weight: 400;
+
+  padding: 0;
+  margin: 0;
+
+  
+  color: #f2f3f4;
+}
+
+
+/* Deixa o fundo fixo na tela */
+ .fundo {    
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -999;
+  
+}
+
+/* Deixa o fundo borrado   */
+
+.borrado {
+  filter: blur(10px);
+}
+
+
+h1, h2, h3 {
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+}
+
+
+.titulo-section{
+  text-align: center;
+  
+  margin-bottom: 3rem;
+}
+
+/*  Fonte do titulo  */
+.titulo {
+  font-family: 'Henny Penny', sans-serif;
+  font-weight: bold;
+}
+
+/*  Centralizar o conteudo na tela  */
+.conteudo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Lista de personagens  e pula linhas para sempre numa linha ter cinco personagens */
+
+.personagens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 1024px;
+  gap: 3rem;
+}
+
+/* Cartoes de personagem */
+.card-personagem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+
+/* Cartão com  tamanho da fixo   */
+
+.card-image {
+  position: relative;
+  background-color: #f2f3f4;
+  width: 10rem;
+  height: 20rem;
+  border-radius: 0.75rem;
+}
+
+.card-image img {
+  display: unset;
+  
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Esconde a descrição quando o cartão não está selecionado */
+.card-image .card-description {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+
+  padding: 10px;
+  margin: 0px;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  font-size: small;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+}
+
+/* Mostra a descrição quando o cartão está selecionado */
+.card-image.selected .card-description {
+  display: block;
+}
+
+/* Nome do Cartão */
+.card-name {
+  color: #f2f3f4;
+  width: 100%;
+  text-align: center;
+  font-family: 'Cherry Swash', sans-serif;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Animações ---------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --ease-in-sine: cubic-bezier(0.12, 0, 0.39, 0);
+  --ease-out-sine: cubic-bezier(0.61, 1, 0.88, 1);
+  --ease-in-out-sine: cubic-bezier(0.37, 0, 0.63, 1);
+}
+
+/* Animações: padrão -------------------------------------------------------- */
+
+.card-image {
+  border: 2px solid transparent;
+  filter: saturate(0.75) brightness(0.9);
+  transition: filter 0.25s var(--ease-out-sine);
+}
+
+.card-image img {
+  filter: none;
+  transform: none;
+
+  transition: 
+    transform 1s var(--ease-out-sine),
+    filter 1s var(--ease-out-sine);
+}
+
+.card-image .card-description {
+  animation: FadeOut 0.25s var(--ease-in-sine) 0s forwards;
+}
+
+.card-image img {
+  filter: none;
+  transition: filter 1s var(--ease-in-sine);
+}
+
+/* Animações: hover --------------------------------------------------------- */
+
+.card-image:hover {
+  filter: saturate(1.0) brightness(1.0);
+  transition: filter 0.25s var(--ease-in-sine);
+}
+
+.card-image:hover img {
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.15));
+  transform: scale(1.025);
+
+  transition: 
+    transform 1s var(--ease-in-out-sine),
+    filter 1s var(--ease-in-out-sine);
+}
+
+/* Animações: selecionar ---------------------------------------------------- */
+
+.card-image.selected {
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  filter: saturate(1.0) brightness(1.1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+
+  transition: 
+    border 0.25s var(--ease-in-out-sine),
+    filter 0.25s var(--ease-in-out-sine);
+}
+
+.card-image.selected .card-description {
+  animation: FadeIn 1s var(--ease-in-out-sine) forwards;
+}
+
+.card-image.selected img {
+  filter: blur(15px) brightness(0.8);
+  transition: filter 0.5s var(--ease-in-out-sine);
+}
+
+/* Animação da descrição do cartão */
+@keyframes FadeIn {
+  from {
+    opacity: 0;
+    display: none;
+  }
+
+  to {
+    opacity: 1;
+    display: block;
+  }
+}
+
+/* Animação para esconder a descrição */
+@keyframes FadeOut {
+  from {
+    opacity: 1;
+    display: block;
+  }
+
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+/* Quando estiver no mobile diminui o tamanho do personagem   */
+@media screen and (max-width: 1024px) {
+  .personagens {
+    width: 100%;
+  }
+}
+
+/* Quando estiver no mobile diminui o tamanho do cartão */
+@media screen and (max-width: 768px) {
+  .card-image {
+    width: 8.5rem;
+    height: 17rem;
+  }
+}
